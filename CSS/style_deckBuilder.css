@@ -40,7 +40,7 @@ body{
 
 .list--cards__card{
     display: inline-block;
-    width: 23%;
+    width: 25%;
     /* margin: 5px; */
     /* padding: 3px; */
 }
@@ -56,7 +56,7 @@ body{
 .container--side{
     border: 2px solid rgb(88, 77, 11);
     border-radius: 15px;
-    margin:  6px;
+    margin:  0 6px;
     padding: 3px;
     width:20%;
 }
