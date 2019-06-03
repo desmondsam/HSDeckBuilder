@@ -20,7 +20,7 @@ xhttp.onreadystatechange = function(){
         var p1Cards = classCards.slice(0,8);
         var cardList = document.querySelectorAll(".link--card")
         cardList.forEach((card_link, index) => {
-            card_link.innerHTML = `<img src = "https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${p1Cards[index].id}.png"></img>`
+            card_link.innerHTML = `<img class="link--card--img" src = "https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${p1Cards[index].id}.png"></img>`
         });
         // for (card_link of cardList){
         //     card_link.innerHTML = '<img src = "https://art.hearthstonejson.com/v1/render/latest/enUS/256x/AT_001.png"></img>'
