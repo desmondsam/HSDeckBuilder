@@ -43,12 +43,11 @@ body{
     display: inline-block;
     width: 25%;
     /* margin: 5px; */
-    /* padding: 3px; */
+    padding: 0 12px;
 }
 
 .link--card{
-    height: 256px;
-    width: 256px;
+    display: block;
     margin: 0;
     padding: 0;
     /* width:  */
@@ -65,4 +64,11 @@ body{
 .link--card--img{
     margin: 0;
     padding: 0;
+    display: block;
+    max-width: 100%;
+    opacity: 0.8;
+}
+
+.link--card--img:hover{
+    opacity: 1;
 }
