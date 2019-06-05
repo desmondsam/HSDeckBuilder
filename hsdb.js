@@ -9,9 +9,10 @@ var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200){
         var cards = JSON.parse(xhttp.responseText);
+        var playableCards = cards.filter(card => !(card.type === "HERO" && (card.set === "HERO_SKINS" || card.set === "CORE")));
         var standardSets = ["CORE", "EXPERT1", "GILNEAS", "BOOMSDAY", "TROLL", "DALARAN"]
-        var standardCards = cards.filter(card => (standardSets.indexOf(card.set) > -1));
-        var sortedCards = standardCards.sort((a,b) => a.cost - b.cost);
+        var standardCards = playableCards.filter(card => (standardSets.indexOf(card.set) > -1));
+        var sortedCards = standardCards.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
         var classCards =  sortedCards.filter(card => card.cardClass === className.toUpperCase());
         var neutralCards =  sortedCards.filter(card => card.cardClass === "NEUTRAL");
         var pagecards = classCards.concat(neutralCards);

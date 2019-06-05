@@ -29,26 +29,39 @@ body{
 
 .list--classes{
     list-style: none;
-    margin: 0;
+    margin: 0 22%; 
+    /* margin: 0; */
     padding: 0;
 }
 
 .list--classes__li{
     display: inline-block;
     width: 33%;
-    /* margin: 5px; */
-    /* padding: 3px; */
 }
 
-.link--portrait{
-    display: block;
-    border: 2px solid goldenrod;
-    border-radius: 5px;
-    margin: 15px 30px;
-    padding-bottom: 66%;
+.link--class{
+    margin: 0;
+    padding: 0;
+    padding-bottom: 125%;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background-size: cover;
+    -webkit-filter: grayscale(50%);
+	filter: grayscale(50%);
+	/* -webkit-transition: .3s ease-in-out; */
+	/* transition: .3s ease-in-out; */
+
+}
+
+/* .link--class__img{
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
     opacity: 0.8;
-}
+} */
 
-.link--portrait:hover{
-    opacity: 1;
+.link--class:hover{
+    -webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
 }
