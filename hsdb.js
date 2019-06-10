@@ -36,12 +36,16 @@ xhttp.onreadystatechange = function(){
             cardLink.addEventListener("click", function(){
                 addCardToDeckArr(deckArray, cardLink.id);
             });
-        })
+            cardLink.addEventListener("contextmenu", function(e){
+                e.preventDefault();
+                removeCardFromDeckArr(deckArray, cardLink.id);
+                return false;
+            }, false);
+        });
         function addCardToDeckArr(deckArray, cardID){
             totalCardsInDeck = deckArray
                 .map(card => card.cardCount)
                 .reduce((total, val) => total + val, 1);
-            console.log(totalCardsInDeck)
             if(totalCardsInDeck <= 30){
                 var currentCard = pagecards.filter(card => card.id === cardID)[0];
                 if(deckArray.length === 0){
@@ -62,17 +66,33 @@ xhttp.onreadystatechange = function(){
                         });
                     }
                 }
-                var currList = "";
-                var sortedDeck = deckArray.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
-                for (dCard of sortedDeck){
-                    currList += `<li class="list--deck__card">${dCard.cost}    ${dCard.name}    x${dCard.cardCount}</li>`
-                    // currList += `<div class="list--deck__card--cost">${dCard.cost}</div><div class="list--deck__card--name">${dCard.name}</div><div class="list--deck__card--count">x${dCard.cardCount}</div>`
-                };
-                deckList.innerHTML = currList;
+                generateDeck(deckArray);
             }
         };
-    }
+        function removeCardFromDeckArr(deckArray, cardID){
+            deckArray.forEach(function(dCard, index){
+                if(dCard.id === cardID){
+                    if(dCard.cardCount === 2){
+                        dCard.cardCount = 1;
+                    }
+                    else{
+                        deckArray.splice(index, 1);
+                    }
+                }
+            });
+            generateDeck(deckArray);
+        }
+    };
 };
 xhttp.open("GET", "Cards.json", true);
 xhttp.send();
 
+function generateDeck(deckArray){
+    var currList = "";
+    var sortedDeck = deckArray.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
+    for (dCard of sortedDeck){
+        currList += `<li class="list--deck__card">${dCard.cost}    ${dCard.name}    x${dCard.cardCount}</li>`
+        // currList += `<div class="list--deck__card--cost">${dCard.cost}</div><div class="list--deck__card--name">${dCard.name}</div><div class="list--deck__card--count">x${dCard.cardCount}</div>`
+    };
+    deckList.innerHTML = currList;
+}
