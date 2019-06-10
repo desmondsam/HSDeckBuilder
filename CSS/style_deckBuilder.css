@@ -53,14 +53,6 @@ body{
     /* width:  */
 }
 
-.container--side{
-    border: 2px solid burlywood;
-    border-radius: 15px;
-    margin:  0 6px;
-    padding: 3px;
-    width:20%;
-}
-
 .link--card--img{
     margin: 0;
     padding: 0;
@@ -71,4 +63,35 @@ body{
 
 .link--card--img:hover{
     opacity: 1;
+}
+
+.side--deck{
+    border: 2px solid burlywood;
+    border-radius: 15px;
+    margin:  0 6px;
+    padding: 3px;
+    width:20%;
+}
+
+.list--deck{
+    list-style: none;
+    /* margin: auto; */
+    /* padding: 0; */
+    /* display: flex; */
+    /* justify-content: space-between; */
+}
+
+.list--deck__card--cost{
+    width: 10%;
+    flex-wrap: wrap;
+}
+
+.list--deck__card--name{
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+.list--deck__card--count{
+    width: 10%;
+    flex-wrap: wrap;
 }

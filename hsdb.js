@@ -3,8 +3,16 @@ var keys = urlParams.keys();
 var classNameSpan = document.getElementById("hsclassname");
 var className = urlParams.get('hsclassname');
 classNameSpan.innerText =  className[0].toUpperCase() + className.substring(1);
-var deck = document.querySelector(".side--deck");
-
+var deckList = document.querySelector(".list--deck");
+var deckArray = [];
+class deckCard{
+    constructor(cost, id, name, cardCount){
+        this.cost = cost;
+        this.id = id;
+        this.name = name;
+        this.cardCount = cardCount;
+    }
+}
 
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){
@@ -26,15 +34,44 @@ xhttp.onreadystatechange = function(){
         var linkCards = document.querySelectorAll(".link--card");
         linkCards.forEach(function(cardLink){
             cardLink.addEventListener("click", function(){
-                addCardToDeck(deck, cardLink.id);
+                addCardToDeckArr(deckArray, cardLink.id);
             });
         })
-        function addCardToDeck(myDeck, cardID){
-            cardinDecks = myDeck.innerHTML;
-            //add id to an empty array, check count of current id in array before adding it to deck
-            deck.innerHTML = cardinDecks + `<li><img src = "https://art.hearthstonejson.com/v1/tiles/${cardID}.png"></img></li>`;
+        function addCardToDeckArr(deckArray, cardID){
+            totalCardsInDeck = deckArray
+                .map(card => card.cardCount)
+                .reduce((total, val) => total + val, 1);
+            console.log(totalCardsInDeck)
+            if(totalCardsInDeck <= 30){
+                var currentCard = pagecards.filter(card => card.id === cardID)[0];
+                if(deckArray.length === 0){
+                    deckArray.push(new deckCard(currentCard.cost, currentCard.id, currentCard.name, 1));
+                }
+                else{
+                    var deckIDs = deckArray.map(dcard => dcard.id);
+                    if(deckIDs.includes(cardID) === false){
+                        deckArray.push(new deckCard(currentCard.cost, currentCard.id, currentCard.name, 1));
+                    }
+                    else{
+                        deckArray.forEach(function(dCard){
+                            if(dCard.id === cardID){
+                                if(dCard.cardCount < 2){
+                                    dCard.cardCount += 1;
+                                }
+                            }
+                        });
+                    }
+                }
+                var currList = "";
+                var sortedDeck = deckArray.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
+                for (dCard of sortedDeck){
+                    currList += `<li class="list--deck__card">${dCard.cost}    ${dCard.name}    x${dCard.cardCount}</li>`
+                    // currList += `<div class="list--deck__card--cost">${dCard.cost}</div><div class="list--deck__card--name">${dCard.name}</div><div class="list--deck__card--count">x${dCard.cardCount}</div>`
+                };
+                deckList.innerHTML = currList;
+            }
         };
-    };
+    }
 };
 xhttp.open("GET", "Cards.json", true);
 xhttp.send();
