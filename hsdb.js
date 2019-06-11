@@ -59,7 +59,7 @@ xhttp.onreadystatechange = function(){
                     else{
                         deckArray.forEach(function(dCard){
                             if(dCard.id === cardID){
-                                if(dCard.cardCount < 2){
+                                if(dCard.cardCount < 2 && currentCard.rarity != "LEGENDARY"){
                                     dCard.cardCount += 1;
                                 }
                             }
@@ -82,17 +82,28 @@ xhttp.onreadystatechange = function(){
             });
             generateDeck(deckArray);
         }
+        function generateDeck(deckArray){
+            var currList = "";
+            var sortedDeck = deckArray.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
+            for (dCard of sortedDeck){
+                currList += `<li class="list--deck__card"><a href="#" class="link--dcard" id="deck_${dCard.id}">${dCard.cost}    ${dCard.name}  x${dCard.cardCount}</a></li>`
+                // currList += `<div class="list--deck__card--cost">${dCard.cost}</div><div class="list--deck__card--name">${dCard.name}</div><div class="list--deck__card--count">x${dCard.cardCount}</div>`
+            };
+            deckList.innerHTML = currList;
+        }
+        // var linkDeckCards = document.querySelectorAll(".link--dcard");
+        // linkDeckCards.forEach(function(cardDLink){
+        //     cardDLink.addEventListener("click", function(){
+        //         console.log("Hello");
+        //         removeCardFromDeckArr(deckArray, cardDLink.id.slice(5));
+        //     });
+        //     cardDLink.addEventListener("contextmenu", function(e){
+        //         e.preventDefault();
+        //         removeCardFromDeckArr(deckArray, cardDLink.id.slice(5));
+        //         return false;
+        //     }, false);
+        // });
     };
 };
 xhttp.open("GET", "Cards.json", true);
 xhttp.send();
-
-function generateDeck(deckArray){
-    var currList = "";
-    var sortedDeck = deckArray.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
-    for (dCard of sortedDeck){
-        currList += `<li class="list--deck__card">${dCard.cost}    ${dCard.name}    x${dCard.cardCount}</li>`
-        // currList += `<div class="list--deck__card--cost">${dCard.cost}</div><div class="list--deck__card--name">${dCard.name}</div><div class="list--deck__card--count">x${dCard.cardCount}</div>`
-    };
-    deckList.innerHTML = currList;
-}
