@@ -37,7 +37,7 @@ xhttp.onreadystatechange = function(){
                 addCardToDeckArr(deckArray, cardLink.id);
             });
             cardLink.addEventListener("contextmenu", function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 removeCardFromDeckArr(deckArray, cardLink.id);
                 return false;
             }, false);
@@ -86,12 +86,20 @@ xhttp.onreadystatechange = function(){
             var currList = "";
             var sortedDeck = deckArray.sort((a,b) => a.cost - b.cost || a.name.localeCompare(b.name));
             for (dCard of sortedDeck){
-                currList += `<li class="list--deck__card"><a href="#" class="link--dcard" id="deck_${dCard.id}">${dCard.cost}    ${dCard.name}  x${dCard.cardCount}</a></li>`
+                currList += `<li class="list--deck__card" id="deck_${dCard.id}" data-cost="${dCard.cost}" data-count="${dCard.cardCount}"><span class="deck__card__name">${dCard.name}</span></li>`
                 // currList += `<div class="list--deck__card--cost">${dCard.cost}</div><div class="list--deck__card--name">${dCard.name}</div><div class="list--deck__card--count">x${dCard.cardCount}</div>`
             };
             deckList.innerHTML = currList;
+            var linkDeckCards = document.querySelectorAll(".list--deck__card");
+            linkDeckCards.forEach(function(cardDLink){
+                cardDLink.addEventListener("click", function(){
+                    removeCardFromDeckArr(deckArray, cardDLink.id.slice(5));
+                });
+            });
+            // generateDeck(deckArray);
         }
-        // var linkDeckCards = document.querySelectorAll(".link--dcard");
+        // var linkDeckCards = document.querySelectorAll(".list--deck__card");
+        // console.log(linkDeckCards)
         // linkDeckCards.forEach(function(cardDLink){
         //     cardDLink.addEventListener("click", function(){
         //         console.log("Hello");
@@ -107,3 +115,5 @@ xhttp.onreadystatechange = function(){
 };
 xhttp.open("GET", "Cards.json", true);
 xhttp.send();
+// var linkDeckCards = document.querySelectorAll("list--deck__card");
+// console.log(linkDeckCards)
